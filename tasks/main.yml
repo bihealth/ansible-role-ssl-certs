@@ -1,5 +1,8 @@
 ---
 
+- name: perform installation
+  include_tasks: install/{{ ansible_os_family }}.yml
+
 - name: install/create SSL certificates
   include: install_cert.yml
   loop: "{{ ssl_certs_certs|default([]) }}"

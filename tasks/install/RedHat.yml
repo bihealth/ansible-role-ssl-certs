@@ -1,0 +1,7 @@
+---
+
+- name: install Ansible dependencies
+  yum:
+    name:
+      - python-cryptography
+    state: present

@@ -1,0 +1,23 @@
+---
+
+- name: install python-pip
+  apt:
+    name:
+      - python-pip
+    state: present
+  register: python_pip
+
+- name: upgrade pip
+  pip:
+    name: pip
+    state: latest
+  when: python_pip.changed
+  tags: [skip_ansible_lint]
+
+# NB: on Ubuntu xenial and Debian jessy, python-cryptography available
+# via apt-get is too outdated for Ansible.
+- name: install python-cryptography
+  pip:
+    name:
+      - cryptography
+    state: present
