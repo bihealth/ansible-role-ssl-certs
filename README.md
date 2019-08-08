@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bihealth/ansible-role-ssl-certs.svg?branch=master)](https://travis-ci.org/bihealth/ansible-role-ssl-certs)
+
 # Installation / Creation of SSL Certificates
 
 This Ansible role creates certificate files into `/etc/ssl/{private,certs}` for the `root` user.
