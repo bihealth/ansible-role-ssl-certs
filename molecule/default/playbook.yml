@@ -1,0 +1,10 @@
+---
+
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-ssl-certs
+  vars:
+    ssl_certs_certs:
+      - name: first.example.com  # self-signed
+      - name: second.example.com  # self-signed

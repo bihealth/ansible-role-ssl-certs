@@ -1,0 +1,5 @@
+---
+
+- name: install/create SSL certificates
+  include: install_cert.yml
+  loop: "{{ ssl_certs_certs|default([]) }}"

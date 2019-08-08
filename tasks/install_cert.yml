@@ -1,0 +1,71 @@
+# Playbook for installing SSL certificates, to be **included** with the following
+# parameter/format:
+#
+# ```
+# item:
+#   name: "<sub.domain.com>"
+#   cert: "<multi-line certificate/chain value>"
+#   key: "<decrypted certificate key>"
+# ```
+#
+# E.g., cert and name can be the results of `{{ lookup('passwordstore', 'name returnall=true')}}`
+# calls.
+---
+
+- name: install Ansible dependencies
+  yum:
+    name:
+      - python-cryptography
+    state: present
+
+- name: create directories
+  file:
+    path: /etc/ssl/{{ directory.name }}
+    state: directory
+    mode: "{{ directory.mode }}"
+  loop:
+    - name: private
+      mode: u=rwx,go=
+    - name: certs
+      mode: u=rwx,go=rx
+  loop_control:
+    loop_var: directory
+
+# Case: self-signed certificate
+
+- name: generate private key for self-signed certificate
+  openssl_privatekey:
+    path: /etc/ssl/private/{{ item.name }}.key
+  when: not item.cert|default(false)
+
+- name: generate CSR for self-signed certificate
+  openssl_csr:
+    path: /etc/ssl/private/{{ item.name }}.csr
+    privatekey_path: /etc/ssl/private/{{ item.name }}.key
+    common_name: "{{ item.name }}"
+  when: not item.cert|default(false)
+
+- name: create self-signed certificate
+  openssl_certificate:
+    path: /etc/ssl/certs/{{ item.name }}.crt
+    privatekey_path: /etc/ssl/private/{{ item.name }}.key
+    csr_path: /etc/ssl/private/{{ item.name }}.csr
+    provider: selfsigned
+  when: not item.cert|default(false)
+
+# Case: actual SSL certificate
+
+- name: install SSL certificate
+  copy:
+    content: "{{ item.cert }}"
+    dest: /etc/ssl/certs/{{ item.name }}.crt
+    mode: a=r
+  when: item.cert|default(false)
+
+- name: install SSL certificate key
+  copy:
+    content: "{{ item.key }}"
+    dest: /etc/ssl/private/{{ item.name }}.key
+    mode: ug=r,o=
+  no_log: True  # SSL certificate key!
+  when: item.cert|default(false)
