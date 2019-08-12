@@ -24,6 +24,7 @@
       mode: u=rwx,go=rx
   loop_control:
     loop_var: directory
+  changed_when: false  # hack
 
 # Case: self-signed certificate
 
