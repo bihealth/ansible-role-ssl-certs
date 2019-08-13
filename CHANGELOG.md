@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD (unreleased)
+## v0.1.1
 
 - Fixing certificate path permission adjustment.
 - Updates to README and meta YAML file.
