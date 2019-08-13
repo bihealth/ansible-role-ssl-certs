@@ -19,7 +19,7 @@
     mode: "{{ directory.mode }}"
   loop:
     - name: private
-      mode: u=rwx,go=
+      mode: u=rwx,go=rx
     - name: certs
       mode: u=rwx,go=rx
   loop_control:
