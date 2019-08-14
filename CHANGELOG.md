@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.2
+
+- Changing role name.
+- Fixing CentOS => EL.
+
 ## v0.1.1
 
 - Fixing certificate path permission adjustment.
