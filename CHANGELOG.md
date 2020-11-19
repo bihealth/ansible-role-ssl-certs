@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.3
+
+- Allowing to register CA certs.
+
 ## v0.1.2
 
 - Changing role name.
