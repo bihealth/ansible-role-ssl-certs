@@ -63,4 +63,4 @@
     dest: /etc/ssl/private/{{ item.name }}.key
     mode: ug=r,o=
   no_log: True  # SSL certificate key!
-  when: item.cert|default(false)
+  when: item.cert|default(false) and item.key|default(false)
