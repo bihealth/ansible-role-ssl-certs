@@ -1,0 +1,7 @@
+---
+
+- name: deposit PEM file
+  copy:
+    dest: /etc/pki/ca-trust/source/anchors/{{ ssl_certs_item.name }}.pem
+    content: "{{ ssl_certs_item.cert }}"
+  notify: run update-ca-trust

@@ -3,6 +3,15 @@
 - name: perform installation
   include_tasks: install/{{ ansible_os_family }}.yml
 
+- name: install/create CAs
+  include: install_ca.yml
+  loop: "{{ ssl_certs_cas|default([]) }}"
+  loop_control:
+    loop_var: ssl_certs_item
+
 - name: install/create SSL certificates
   include: install_cert.yml
   loop: "{{ ssl_certs_certs|default([]) }}"
+
+- name: flush handlers to ensure update-ca-trust has been run
+  meta: flush_handlers

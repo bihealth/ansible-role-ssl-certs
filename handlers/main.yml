@@ -1,0 +1,4 @@
+---
+
+- name: run update-ca-trust
+  command: /usr/bin/update-ca-trust
